@@ -1,0 +1,18 @@
+/* Header.css */
+.search-list {
+    /* display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 1; */
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  .search-list.visible {
+    /* display: none; */
+  }
+  
