@@ -220,6 +220,10 @@ const SingleProduct = () => {
                       <h3 className="product-heading">Phân Loại</h3>
                       <p className="product-data">{product?.product_type}</p>
                     </div>
+                    <div className="d-flex gap-10 align-items-center my-2">
+                      <h3 className="product-heading">Đang Còn</h3>
+                      <p className="product-data">{product?.product_quantity}</p>
+                    </div>
 
 
                     {Object.entries(product?.product_attributes).map(([key, value]) => (
@@ -282,7 +286,7 @@ const SingleProduct = () => {
                           type="number"
                           name="quantity"
                           min={1}
-                          max={10}
+                          max={product?.product_quantity}
                           onChange={handleQuantity}
                           className="form-control"
                           style={{ width: "70px" }}

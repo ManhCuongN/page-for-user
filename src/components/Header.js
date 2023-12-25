@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import compare from "../images/compare.svg";
+import { FaMicrophone } from "react-icons/fa";
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
@@ -16,15 +17,56 @@ import { AuthContext } from "../contexts/AuthContext";
 import { HeartOutlined, MessageOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const {authState: {user}} = useContext(AuthContext)
+  const { authState: { user } } = useContext(AuthContext)
   const navigate = useNavigate();
+  const [voice, setVoice] = useState("")
 
   const { cartState: { listProductCart } } = useContext(CartContext)
   const { searchProductFunc, productState: { searchProduct } } = useContext(ProductContext)
   const [numCart, setNumCart] = useState(listProductCart?.cart_products?.length || 0)
   const [showList, setShowList] = useState(false);
 
+  const initializeSpeechRecognition = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+
+    const grammar = '#JSGF V1.0;';
+    const recognition = new SpeechRecognition();
+    const speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammar, 1);
+    recognition.grammars = speechRecognitionList;
+    recognition.lang = 'vi-VN';
+    recognition.interimResults = false;
+
+    recognition.onresult = async function (event) {
+      const lastResult = event.results.length - 1;
+      const content = event.results[lastResult][0].transcript;
+      setVoice(content)
+      const data = {
+        keySearch: content
+      }
+      const result = await searchProductFunc(data)
+      console.log(result);
+    };
+
+    recognition.onspeechend = function () {
+      recognition.stop();
+    };
+
+    recognition.onerror = function (event) {
+      // setVoiceContent('Error occurred in recognition: ' + event.error);
+    };
+
+    return recognition;
+  };
+
+  const handleButtonClick = () => {
+    const recognition = initializeSpeechRecognition();
+    recognition.start();
+  };
+
   const hanldeSearch = async (e) => {
+    setVoice(e.target.value)
     const data = {
       keySearch: e.target.value
     }
@@ -55,12 +97,14 @@ const Header = () => {
             <div className="col-6" >
               <p className=" mb-0 font-c" >
                 Chào Mừng Đến Với ShopDev
+
               </p>
+
             </div>
             <div className="col-6">
               <p className="text-end  mb-0">
                 Hotline:<span> </span>
-                <a className style={{color: '#333'}} href="tel:+91 8264954234">
+                <a className style={{ color: '#333' }} href="tel:+91 8264954234">
                   (+084) 69423478
                 </a>
               </p>
@@ -73,11 +117,11 @@ const Header = () => {
           <div className="row align-items-center">
             <div className="col-2">
               <h2>
-                <Link to= "/" style={{color: '#333'}}>Shop Dev</Link>
+                <Link to="/" style={{ color: '#333' }}>Shop Dev</Link>
               </h2>
             </div>
             <div className="col-5">
-              <div className="input-group">
+              <div className="input-group" style={{ position: "relative" }}>
                 <input
                   type="text"
                   className="form-control py-2"
@@ -85,36 +129,44 @@ const Header = () => {
                   aria-label="Search Product Here..."
                   aria-describedby="basic-addon2"
                   onChange={hanldeSearch}
-                  style={{borderRadius: "50px"}}
+                  value={voice}
+                  style={{ borderRadius: "50px", paddingLeft: "40px" }}
                 />
-                {/* <span className="input-group-text p-3" id="basic-addon2">
-                  <BsSearch className="fs-6" />
-                </span> */}
-                
-                </div>
-                {searchProduct.length > 0 && (
-                <div className='search-list'>
-                  <List
-                    style={{ zIndex: 99 }}
-                    // itemLayout="horizontal"
-                    dataSource={searchProduct}
-                    renderItem={(item, index) => (
-                      <List.Item>
-                        <List.Item.Meta
-                          avatar={<Avatar src={item.product_thumb
-                          } />}
-                          title={<a href={`product/${item._id}`}>{item.product_name
-                        }</a>}
-                        description={item.product_description.length > MAX_DESCRIPTION_LENGTH ?
-                          `${item.product_description.substring(0, MAX_DESCRIPTION_LENGTH)}...` :
-                          item.product_description
-                        }
-                        />
-                      </List.Item>
-                    )}
-                  />
+                <FaMicrophone
+                  className="fs-6"
+                  onClick={handleButtonClick}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    zIndex: "1",
+                    cursor: "pointer"
+
+                  }}
+                />
               </div>
-              )}
+             {searchProduct.length > 0 && (
+  <div className='search-list' style={{borderRadius: '15px'}} >
+    <List
+      // itemLayout="horizontal"
+      dataSource={searchProduct}
+      renderItem={(item, index) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={<Avatar src={item.product_thumb} />}
+            title={<a href={`product/${item._id}`}>{item.product_name}</a>}
+            description={item.product_description.length > MAX_DESCRIPTION_LENGTH ?
+              `${item.product_description.substring(0, MAX_DESCRIPTION_LENGTH)}...` :
+              item.product_description
+            }
+          />
+        </List.Item>
+      )}
+    />
+  </div>
+)}
+
             </div>
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
@@ -123,9 +175,9 @@ const Header = () => {
                     to="/compare-product"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                   <HeartOutlined style={{fontSize: "35px"}}/>
+                    <HeartOutlined style={{ fontSize: "35px" }} />
                     <p className="mb-0">
-                      
+
                     </p>
                   </Link>
                 </div>
@@ -133,16 +185,16 @@ const Header = () => {
                   <Link
                     to="/chat"
                     className="d-flex align-items-center gap-10 "
-                   
+
                   >
-                    <MessageOutlined style={{fontSize: "35px"}}/>
-                   
+                    <MessageOutlined style={{ fontSize: "35px" }} />
+
                     <p className="mb-0">
-                      
+
                     </p>
                   </Link>
                 </div>
-               
+
                 {/* <div>
                   <Link
                     to="/login"
@@ -160,29 +212,29 @@ const Header = () => {
                     to="/cart"
                     className="d-flex align-items-center gap-10"
                   >
-                   <ShoppingCartOutlined style={{fontSize: "35px"}}/>
-                   
+                    <ShoppingCartOutlined style={{ fontSize: "35px" }} />
+
                   </Link>
                 </div>
                 <div>
                   {/* <ModalAddress /> */}
                 </div>
-                
+
                 {user && (
                   <div>
-                  <Link
-                    to="/login"
-                    className="d-flex align-items-center gap-10"
-                  >
-                    <p className="mb-0">
-                       {user?.givenName} {user?.familyName}
-                    </p>
-                    <img src={user?.avatar} alt="user" style={{width: '30px', borderRadius: "100%"}} />
+                    <Link
+                      to="/login"
+                      className="d-flex align-items-center gap-10"
+                    >
+                      <p className="mb-0">
+                        {user?.givenName} {user?.familyName}
+                      </p>
+                      <img src={user?.avatar} alt="user" style={{ width: '30px', borderRadius: "100%" }} />
 
-                  </Link>
-                </div>
+                    </Link>
+                  </div>
                 )}
-                
+
               </div>
             </div>
           </div>

@@ -40,6 +40,7 @@ const ListOrdered = () => {
     const renderOrderList = (orders) => {
       return (
         <List
+         style={{backgroundColor: "#BFDBFD", borderRadius: "15px"}}
           itemLayout="vertical"
           size="large"
           pagination={{
