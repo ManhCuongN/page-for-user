@@ -101,8 +101,8 @@ const SingleProduct = () => {
         quantity: quantityProduct,
         price: product.product_price,
         name: product.product_name,
-        type: product.product_type, 
-        brand: product.product_attributes.brand,   
+        type: product.product_type,
+        brand: product.product_attributes.brand,
         variation: {
           ...transformedObject
         }
@@ -140,10 +140,27 @@ const SingleProduct = () => {
   };
   console.log("SÁ", shopName.avatar);
   const closeModal = () => { };
+
+  const translateKey = (key) => {
+    const translations = {
+      style: "Nguồn Gốc",
+      material: "Chất Liệu",
+      brand: "Thương Hiệu",
+      color: "Màu Sắc",
+      size: "Size",
+      origin: "Nguồn Gốc",
+      expried: "HSD",
+      segment: "Phân Khúc"
+      // Thêm các key và giảng dịch tương ứng vào đây
+    };
+
+    return translations[key] || key;
+  };
+
   return (
     <>
       <ToastContainer />
-      <Meta title={"Product Name"} /> 
+      <Meta title={"Product Name"} />
       <BreadCrumb title="Product Name" />
       {product && (
         <>
@@ -171,14 +188,14 @@ const SingleProduct = () => {
               <div className="col-6" >
                 <div className="main-product-details" >
                   <div className="border-bottom">
-                    <h3 className="title">{product?.product_name}</h3> 
+                    <h3 className="title">{product?.product_name}</h3>
                     <FontAwesomeIcon icon="fa-light fa-heart" />
                   </div>
                   <div className="border-bottom py-3">
                     <p className="price">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product?.product_price)}</p>
                     <div className="d-flex align-items-center gap-10">
-                    
-                      
+
+
                     </div>
                     <a className="review-btn" href="#review">
                       Đánh Gía
@@ -187,7 +204,7 @@ const SingleProduct = () => {
                   <div className=" py-3">
 
                     <div className="d-flex gap-10 align-items-center my-2">
-                      <img src={shopName.avatar} style={{width: "30px", borderRadius: "100%"}} />
+                      <img src={shopName.avatar} style={{ width: "30px", borderRadius: "100%" }} />
                       {/* <Avatar  size="small">
                         { shopName.avatar}
                       </Avatar> */}
@@ -204,62 +221,60 @@ const SingleProduct = () => {
                       <p className="product-data">{product?.product_type}</p>
                     </div>
 
-                    
+
                     {Object.entries(product?.product_attributes).map(([key, value]) => (
                       value ? (
                         <div className="d-flex gap-10 align-items-center my-2" key={key}>
-                          <h3 className="product-heading">{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
-                          <div className="d-flex gap-10 align-items-center my-2" key={key}>
-
-                            <p className="product-data" style={{marginLeft: "70px"}}>{value.charAt(0).toUpperCase() + value.slice(1)}</p>
+                          <h3 className="product-heading" style={{ width: "100px" }}>{translateKey(key)}</h3>
+                          <div className="d-flex gap-10 align-items-center my-2">
+                            <p className="product-data" style={{ width: "200px", marginLeft: "10px" }}>{value.charAt(0).toUpperCase() + value.slice(1)}</p>
                           </div>
-                          
                         </div>
                       ) : (<></>)
                     ))}
 
-                    
-                      {Object.keys(product?.product_variation).map((key) => (
-                        <div className="" key={key}>
-                          <h3 className="product-heading-var">{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
-                          <div className="d-flex gap-10 align-items-center my-2" style={{marginLeft: "120px"}}>
-                            {product?.product_variation[key].split(',').map((value, index) => (
-                              
-                                 <p
-                               
-                                key={key}
-                                onClick={() => handleValueClick(key, value)}
-                                style={{
-                                  backgroundColor: selectedPairs.some(
-                                    pair => pair.key === key && pair.value === value
-                                  ) ? '#BFDBFD' : '#DADADA',
-                                  padding: '3px 3px',
-                                  
-                                  color: selectedPairs.some(
-                                    pair => pair.key === key && pair.value === value
-                                  ) ? 'black' : '#9C9696',
-                                  cursor: 'pointer',
-                                  fontSize: '13px',
-                                  borderRadius: '5px',
-                                  width: '60px',
-                                 
-                                  textAlign: 'center'
-                                  
-                                }}
-                              >
-                                {value}
-                              </p>
-                              
-                             
-                              // <li key={index}>{value}</li>
-                            ))}
-                          </div>
+
+                    {Object.keys(product?.product_variation).map((key) => (
+                      <div className="" key={key}>
+                        <h3 className="product-heading-var">{translateKey(key)}</h3>
+                        <div className="d-flex gap-10 align-items-center my-2" style={{ marginLeft: "120px" }}>
+                          {product?.product_variation[key].split(',').map((value, index) => (
+
+                            <p
+
+                              key={key}
+                              onClick={() => handleValueClick(key, value)}
+                              style={{
+                                backgroundColor: selectedPairs.some(
+                                  pair => pair.key === key && pair.value === value
+                                ) ? '#BFDBFD' : '#DADADA',
+                                padding: '3px 3px',
+
+                                color: selectedPairs.some(
+                                  pair => pair.key === key && pair.value === value
+                                ) ? 'black' : '#9C9696',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                borderRadius: '5px',
+                                width: '60px',
+
+                                textAlign: 'center'
+
+                              }}
+                            >
+                              {value}
+                            </p>
+
+
+                            // <li key={index}>{value}</li>
+                          ))}
                         </div>
-                      ))}
-                 
+                      </div>
+                    ))}
+
                   </div>
                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
-              
+
                     <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                       <h3 className="product-heading">Số Lượng</h3>
                       <div className="">
@@ -277,25 +292,25 @@ const SingleProduct = () => {
                       <div className="d-flex align-items-center gap-30 ms-5">
                         <button
                           className="button border-0"
-                         
+
                           type="button"
                           onClick={handleAddToCart}
-                          style={{borderRadius: '15px'}}
+                          style={{ borderRadius: '15px' }}
                         >
                           Thêm vào giỏ hàng
                         </button>
-                        
+
                       </div>
                     </div>
-                    
+
                     <div className="d-flex gap-10 flex-column  my-3">
 
-                      
-    
-                   
+
+
+
                       <h3 className="product-heading">Vận Chuyển & Hoàn Trả</h3>
                       <p className="product-data">
-                      Miễn phí vận chuyển và trả lại có sẵn trên tất cả các đơn đặt hàng! <br /> Chúng tôi vận chuyển tất cả các đơn đặt hàng nội địa trong vòng
+                        Miễn phí vận chuyển và trả lại có sẵn trên tất cả các đơn đặt hàng! <br /> Chúng tôi vận chuyển tất cả các đơn đặt hàng nội địa trong vòng
                         <b> 5-10 ngày!</b>
                       </p>
                     </div>
@@ -321,7 +336,7 @@ const SingleProduct = () => {
             <div className="row">
               <div className="col-12">
                 <h4>Mô Tả Sản Phẩm</h4>
-                <div className="bg-white p-3" style={{borderRadius: '15px'}}>
+                <div className="bg-white p-3" style={{ borderRadius: '15px' }}>
                   <p>
                     {product.product_description}
                   </p>
@@ -329,7 +344,7 @@ const SingleProduct = () => {
               </div>
             </div>
           </Container>
-          <Review productId={id} user={user}  />
+          <Review productId={id} user={user} />
           <Container class1="popular-wrapper py-5 home-wrapper-2">
             <div className="row">
               <div className="col-12">
