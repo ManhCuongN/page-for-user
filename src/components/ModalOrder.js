@@ -114,24 +114,25 @@ const { discountId } = location.state || {};
   return (
     <>
       <Modal
+      
         open={showModalOrder}
         title="Thông Tin Đặt Hàng"
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           order_type_payment === 'COD' ? (
-            <Button key="back" onClick={handleConfirmOrder} style={{backgroundColor: "green", color: "#fff"}}>
+            <Button key="back" onClick={handleConfirmOrder} style={{backgroundColor: "#F6A400", color: "white"}}>
               Đặt Hàng
             </Button>
-          ) : <Button key="back" onClick={handlePaymentVNPAY}>
+          ) : <Button key="back" onClick={handlePaymentVNPAY} style={{backgroundColor: "#F6A400", color: "white"}}>
             Thanh Toán
           </Button>,
           ,
         ]}
       >
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Space direction="vertical" size="middle" style={{ display: 'flex',  }}>
 
-          <Card title="Thông Tin Sản Phẩm" size="small">
+          <Card title="Thông Tin Sản Phẩm" size="small"   style={{backgroundColor: '#BFDBFD'}}>
             {order_products?.map((p) =>
               p.item_products.map((item) => (
                 <div key={item.id}>
@@ -140,13 +141,13 @@ const { discountId } = location.state || {};
               ))
             )}
           </Card>
-          <Card title="Thông Tin Vận Chuyển" size="small">
+          <Card title="Thông Tin Vận Chuyển" size="small" style={{backgroundColor: '#BFDBFD'}}>
 
             <p><b>Thông Tin Người Nhận:</b>  {order_shipping.recipientName}</p>
             <p><b>Địa Chỉ:</b>  {`${order_shipping.recipientName} - ${order_shipping.note}, ${order_shipping.wards}, ${order_shipping.district}, ${order_shipping.city}.`}</p>
             <p><b>Email:</b>  {order_shipping.email} </p>
           </Card>
-          <Card title="Đặt Hàng" size="small">
+          <Card title="Đặt Hàng" size="small" style={{backgroundColor: '#BFDBFD'}}>
             <p><b>Kiểu Thanh Toán:</b>  {order_type_payment}</p>
             <p><b>Mã Đơn Hàng: </b> {order_trackingNumber}</p>
           </Card>
