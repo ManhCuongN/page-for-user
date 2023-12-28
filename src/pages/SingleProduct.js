@@ -143,7 +143,7 @@ const SingleProduct = () => {
 
   const translateKey = (key) => {
     const translations = {
-      style: "Nguồn Gốc",
+      style: "Phong Cách",
       material: "Chất Liệu",
       brand: "Thương Hiệu",
       color: "Màu Sắc",
