@@ -44,10 +44,10 @@ const Home = () => {
             <Carousel>
                <div className="main-banner position-relative ">
               <img
-                src="https://i.pinimg.com/564x/1f/40/ed/1f40ed9902179cb173f2c91a5bc964d3.jpg"
+                src="https://fireapps.io/wp-content/uploads/2020/10/5-best-free-ecommerce-flatform.png"
                 className="img-fluid rounded-3"
                 alt="main banner"
-                style={{height: '400px'}}
+                style={{height: '400px', objectFit: 'cover'}}
               />
               <div className="main-banner-content position-absolute">
                 {/* <h4>Siêu Ưu Đãi</h4>
@@ -77,20 +77,20 @@ const Home = () => {
             <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
               <div className=" ">
                 <img
-                  src="https://i.pinimg.com/564x/fe/ae/ce/feaece104da44361d70303f1deac1a9a.jpg"
+                  src="https://t3.ftcdn.net/jpg/04/65/46/52/360_F_465465254_1pN9MGrA831idD6zIBL7q8rnZZpUCQTy.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
-                  style={{height: '200px', width: '750px'}}
+                  style={{height: '200px', width: '750px', objectFit: 'cover'}}
                 />
              
               </div>
 
               <div className="">
                 <img
-                  src="https://i.pinimg.com/564x/40/0a/a5/400aa55ad1a5a1a0491b3159282c4e8c.jpg"
+                  src="https://cedcommerce.com/blog/wp-content/uploads/2018/12/Must-Have-Features-For-Your-Ecommerce-Website-732x244.png"
                   className="img-fluid rounded-3"
                   alt="main banner"
-                  style={{height: '200px', width: '750px'}}
+                  style={{height: '200px', width: '750px', objectFit: 'cover'}}
                 />
              
               </div>
