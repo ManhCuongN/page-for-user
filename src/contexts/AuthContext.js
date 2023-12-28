@@ -202,7 +202,7 @@ const AuthContextProvider = ({ children }) => {
 
   const forgotPassword = async(data) => {
     try {
-      const response = await axios.patch(`https://user-service-production-5aa3.up.railway.app/api/v1/user/forgot-pass`,data);
+      const response = await axios.patch(`https://api-gateway-production-187c.up.railway.app/api/v1/user/forgot-pass`,data);
       return response.data;
   } catch (error) {
     alert(error)
