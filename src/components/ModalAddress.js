@@ -120,7 +120,10 @@ const ModalAddress = () => {
     <>
       <button
       style={{height: '30px', width: '110px', borderRadius: '5px', backgroundColor: '#0D2D53', color:'#fff', marginBottom: '40px'}}
-       
+      
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      type="button"
       >
         Thêm Địa Chỉ
       </button>
