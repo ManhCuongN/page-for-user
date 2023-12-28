@@ -11,6 +11,7 @@ import axios from "axios";
 import Noti from "./Noti";
 import { CartContext } from "../contexts/CartContext";
 import { Avatar, List } from 'antd';
+import { Button, Popover, ConfigProvider } from 'antd';
 import { ProductContext } from "../contexts/ProductContext";
 import './Header.css'; // Import file CSS chứa các style
 import { AuthContext } from "../contexts/AuthContext";
@@ -25,6 +26,7 @@ const Header = () => {
   const { searchProductFunc, productState: { searchProduct } } = useContext(ProductContext)
   const [numCart, setNumCart] = useState(listProductCart?.cart_products?.length || 0)
   const [showList, setShowList] = useState(false);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
 
   const initializeSpeechRecognition = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -121,51 +123,68 @@ const Header = () => {
               </h2>
             </div>
             <div className="col-5">
-              <div className="input-group" style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Tìm Kiếm Ở Đây..."
-                  aria-label="Search Product Here..."
-                  aria-describedby="basic-addon2"
-                  onChange={hanldeSearch}
-                  value={voice}
-                  style={{ borderRadius: "50px", paddingLeft: "40px" }}
-                />
-                <FaMicrophone
-                  className="fs-6"
-                  onClick={handleButtonClick}
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    right: "10px",
-                    transform: "translateY(-50%)",
-                    zIndex: "1",
-                    cursor: "pointer"
+              <Popover
+                content={
+                  <div className='search-list' style={{ borderRadius: '15px' }}>
+                    <List
+                      dataSource={searchProduct}
+                      renderItem={(item, index) => (
+                        <List.Item
+                          onMouseEnter={() => setHoveredProduct(index)}
+                          onMouseLeave={() => setHoveredProduct(null)}
+                          style={{
+                            background: hoveredProduct === index ? '#BFDBFD' : 'transparent',
+                            transition: 'background 0.3s',
+                            borderRadius: '15px'
+                          }}
+                        >
+                          <List.Item.Meta
+                            avatar={<Avatar src={item.product_thumb} />}
+                            title={<a href={`product/${item._id}`}>{item.product_name}</a>}
+                            description={
+                              item.product_description.length > MAX_DESCRIPTION_LENGTH
+                                ? `${item.product_description.substring(0, MAX_DESCRIPTION_LENGTH)}...`
+                                : item.product_description
+                            }
+                          />
+                        </List.Item>
+                      )}
+                    />
+                  </div>
+                }
+                trigger='click'  // Chọn trigger 'click' để mở popover khi người dùng nhấp vào
+                visible={showList}  // Truyền trạng thái của popover
+                onVisibleChange={(visible) => setShowList(visible)}  // Cập nhật trạng thái khi popover mở hoặc đóng
+              >
+                <div>
+                  {/* Nút tìm kiếm và microphone */}
+                  <div className="input-group" style={{ position: "relative" }}>
+                    <input
+                      type="text"
+                      className="form-control py-2"
+                      placeholder="Tìm Kiếm Ở Đây..."
+                      aria-label="Search Product Here..."
+                      aria-describedby="basic-addon2"
+                      onChange={hanldeSearch}
+                      value={voice}
+                      style={{ borderRadius: "50px", paddingLeft: "40px" }}
+                    />
+                    <FaMicrophone
+                      className="fs-6"
+                      onClick={handleButtonClick}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        right: "10px",
+                        transform: "translateY(-50%)",
+                        zIndex: "1",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                </div>
+              </Popover>
 
-                  }}
-                />
-              </div>
-             {searchProduct.length > 0 && (
-  <div className='search-list' style={{borderRadius: '15px'}} >
-    <List
-      // itemLayout="horizontal"
-      dataSource={searchProduct}
-      renderItem={(item, index) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={<Avatar src={item.product_thumb} />}
-            title={<a href={`product/${item._id}`}>{item.product_name}</a>}
-            description={item.product_description.length > MAX_DESCRIPTION_LENGTH ?
-              `${item.product_description.substring(0, MAX_DESCRIPTION_LENGTH)}...` :
-              item.product_description
-            }
-          />
-        </List.Item>
-      )}
-    />
-  </div>
-)}
 
             </div>
             <div className="col-5">
@@ -223,7 +242,7 @@ const Header = () => {
                 {user && (
                   <div>
                     <Link
-                      to="/login"
+                      to="/profile"
                       className="d-flex align-items-center gap-10"
                     >
                       <p className="mb-0">
