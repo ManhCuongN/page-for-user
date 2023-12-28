@@ -17,7 +17,7 @@ const Login = () => {
   const { loginUser, loadUser } = useContext(AuthContext);
   const google = () => {
     window.open(
-      `${process.env.REACT_APP_API_ENDPOINT_SERVER}/auth/user/google`,
+      `https://api-gateway-production-187c.up.railway.app/api/v1/auth/user/google`,
       "_self"
     );
   };
