@@ -1,12 +1,63 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ReactStars from "react-rating-stars-component";
-import ProductCard from "../components/ProductCard";
+import ProductCardV2 from "../components/ProductCardV2";
 import Color from "../components/Color";
 import Container from "../components/Container";
+import { Slider } from 'antd';
+import { ProductContext } from "../contexts/ProductContext";
 
 const OurStore = () => {
+  const marks = {
+    0: '0',
+    20: '200000',
+    45: '450000',
+    70: '800000',
+    100: {
+      style: {
+        color: '#f50',
+      },
+      label: <strong>1.000.000đ</strong>,
+    },
+  };
+
+  const [sliderValue, setSliderValue] = useState(0);
+  const [sliderValueSearch, setSliderValueSearch] = useState(0);
+  const [searchType, setSearchType] = useState("");
+  const [listSearch, setListSearch] = useState([]);
+
+  const {searchMulti} = useContext(ProductContext)
+
+
+
+  const handleSliderAfterChange = async(value) => {
+    setSliderValue(value)
+    setSliderValueSearch(marks[value])
+    const data = {
+      product_price: parseFloat(marks[value]),
+      product_type: searchType
+    }
+    const result = await searchMulti(data)
+    if(result) setListSearch(result.metadata)
+
+  
+  };
+
+  const handleSearchType = async (e) => {
+    setSearchType(e.target.value);
+  
+    const data = {
+      product_price: sliderValueSearch,
+      product_type: e.target.value, // Sử dụng giá trị mới của searchType
+    };
+  
+    console.log("Data sent", data);
+    const result = await searchMulti(data);
+    if (result) setListSearch(result.metadata);
+  };
+
+
   const [grid, setGrid] = useState(4);
   return (
     <>
@@ -184,65 +235,31 @@ const OurStore = () => {
                   </p>
                   <select
                     name=""
-                    defaultValue={"manula"}
+                   
                     className="form-control form-select"
                     id=""
+                    onChange={handleSearchType}
                   >
-                    <option value="manual">Featured</option>
-                    <option value="best-selling">Best selling</option>
-                    <option value="title-ascending">Alphabetically, A-Z</option>
-                    <option value="title-descending">
-                      Alphabetically, Z-A
-                    </option>
-                    <option value="price-ascending">Price, low to high</option>
-                    <option value="price-descending">Price, high to low</option>
-                    <option value="created-ascending">Date, old to new</option>
-                    <option value="created-descending">Date, new to old</option>
+                    <option value="">None</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Electronics">Electronics</option>
+                   
                   </select>
+               
+                  <span>
+                       <Slider marks={marks} included={false} defaultValue={0} 
+                        value={sliderValue}
+                        onAfterChange={handleSliderAfterChange}
+                       
+                       style={{width: '400px', marginLeft: '300px'}} />
+                  </span>
                 </div>
-                <div className="d-flex align-items-center gap-10">
-                  <p className="totalproducts mb-0">21 Products</p>
-                  <div className="d-flex gap-10 align-items-center grid">
-                    <img
-                      onClick={() => {
-                        setGrid(3);
-                      }}
-                      src="images/gr4.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                    <img
-                      onClick={() => {
-                        setGrid(4);
-                      }}
-                      src="images/gr3.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                    <img
-                      onClick={() => {
-                        setGrid(6);
-                      }}
-                      src="images/gr2.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-
-                    <img
-                      onClick={() => {
-                        setGrid(12);
-                      }}
-                      src="images/gr.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                  </div>
-                </div>
+                
               </div>
             </div>
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard grid={grid} />
+                <ProductCardV2 data={listSearch} grid={grid} />
               </div>
             </div>
           </div>

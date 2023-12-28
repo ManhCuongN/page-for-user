@@ -34,6 +34,33 @@ const ProductContextProvider = ({children}) => {
         }
     }
 
+    const searchMulti = async(data) => {
+        const {product_price, product_type} = data
+        console.log("data",data);
+        try {
+            if(product_price==0) {
+                console.log("vodaya1");
+
+                const response = await axios.post(`https://product-service-production-0ee8.up.railway.app/v1/api/product/search/multi/?filter={"product_type": "${product_type}"}`)
+                return response.data
+            }
+            else if(product_type=="") {
+                console.log("vodaya2");
+                const response = await axios.post(`https://product-service-production-0ee8.up.railway.app/v1/api/product/search/multi/?filter={"product_price":${product_price}}`)
+                return response.data
+            }
+            else {
+                console.log("vodaya3");
+
+                const response = await axios.post(`https://product-service-production-0ee8.up.railway.app/v1/api/product/search/multi/?filter={"product_price": ${product_price}, "product_type": "${product_type}"}`)
+                return response.data
+            }
+      
+        } catch (error) {
+            console.log("Lôi search Muilti",error);
+        }
+    }
+
     //get product by id
     const getProductById = async(productId) => {
         try {
@@ -151,7 +178,7 @@ const ProductContextProvider = ({children}) => {
     //context data
     const productContextData = {
         productState,getListProduct,getShoppingSession, getProductById, getInfoShop, followShop, socketIn, 
-        messPushNotiNew, setMessPushNoti,followUnShop,searchProductFunc, suggestProductFunc, specialProductFunc
+        messPushNotiNew,searchMulti, setMessPushNoti,followUnShop,searchProductFunc, suggestProductFunc, specialProductFunc
     }
 
     return (
