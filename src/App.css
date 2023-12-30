@@ -316,6 +316,10 @@ footer .input-group-text {
 .product-card .product-details h5 {
   font-size: 15px;
   color: var(--color-1c1c1b);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 600px;
 }
 .product-card .product-details p.price {
   font-size: 16px;

@@ -70,7 +70,7 @@ socket?.on("pushNotiDiscount", (mess) => {
         <Popover placement="bottom" title={text} content={content} style={{display: 'block'}}>
         <BellOutlined style={{fontSize: "35px"}}/>
 
-          {message}
+          
         </Popover>
       </Link>
     </div>
