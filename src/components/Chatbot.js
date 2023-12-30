@@ -20,7 +20,7 @@ const ChatBox = () => {
     const newUserMessage = { name: "User", message: text1 };
     setMessages(prevMessages => [...prevMessages, newUserMessage]);
   
-    fetch('http://127.0.0.1:80/predict', {
+    fetch('http://192.168.1.6:80/predict', {
       method: 'POST',
       body: JSON.stringify({ message: text1 }),
       mode: 'cors',
