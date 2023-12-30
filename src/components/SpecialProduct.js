@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 const SpecialProduct = ({data}) => {
-  console.log("dataaa",data);
   const [countdownDay, setCountdownDay] = useState("");
   const [countdownHours, setCountdownDayHours] = useState("");
   const [countdownMinutes, setCountdownDayMinutes] = useState("");

@@ -59,7 +59,10 @@ const ProductCardV2 = ({ data, grid, state }) => {
                     <img src={product?.product_images[0]} className="img-fluid" alt="product image" />
                   </div>
                   <div className="product-details">
-                    <h5 className="product-title">
+                    <h5 className="product-title" style={{ overFlow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  maxWidth: '600px'}}>
                       {product?.product_name}
                     </h5>
                     <p className="description" >
