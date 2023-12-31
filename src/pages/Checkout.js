@@ -271,17 +271,16 @@ const Checkout = ({socketClient}) => {
       order_userId: localStorage.getItem("userId"),
       order_trackingNumber: generateRandomCodeWithHash()
     }
-    console.log("or", data.order_products);
-
+    
     setOrderInfomation(data)
 
-    // async function postData() {
-    //   for (const item of resultsSuggest) {
-    //     await MyAxios.post(`${config.urlProductService}/product/write/csv/v2`, [item]);
-    //   }
-    // }
+    async function postData() {
+      for (const item of resultsSuggest) {
+        await MyAxios.post(`${config.urlProductService}/product/write/csv/v2`, [item]);
+      }
+    }
     
-    // postData();
+    postData();
   }
 
   let body
