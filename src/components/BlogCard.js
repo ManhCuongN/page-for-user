@@ -12,10 +12,12 @@ const BlogCard = ({data}) => {
       </div>
       <div className="blog-content">
         <p className="date">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Product_Price)}</p>
-        <h5 className="title"  style={{ overFlow: 'hidden',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-  maxWidth: '600px'}}>{Product_Name}</h5>
+        <h5 className="title" 
+        style={{overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: 'ellipsis',
+        maxWidth: '400px'}}
+        >{Product_Name}</h5>
         <p className="description" style={{overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: 'ellipsis',
