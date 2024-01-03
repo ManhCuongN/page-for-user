@@ -23,14 +23,14 @@ const ShopInfo = () => {
     const handleFollow = async() => {
       
         await followShop(shop._id)
-        await getInfoShop(shop._id)
+        // await getInfoShop(shop._id)
       setButtonFollow(true)
 
     }
     const handleUnFollow = async() => {
       await followUnShop(shop._id)
       setButtonFollow(false)
-      await getInfoShop(shop._id)
+      // await getInfoShop(shop._id)
   }
   return (
     <>
