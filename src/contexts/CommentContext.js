@@ -67,7 +67,7 @@ const CommentContextProvider = ({children}) => {
           const response = await MyAxios.get(`${config.urlProductService}/comment?productId=${productId}`);
           const updatedMetadata = await Promise.all(response.data.metadata.map(async (p) => {
             try {
-              const userResponse = await axios.post(`${config.urlUserService}/user/check/exist`, p.comment_userId );
+              const userResponse = await axios.post(`${config.urlUserService}/user/check/exist`, {userId: p.comment_userId} );
               return {
                 ...p,
                 user: userResponse.data.user // Giả sử userResponse.data chứa thông tin của user
