@@ -109,7 +109,7 @@ const ProductContextProvider = ({children}) => {
         try {
             const response = await MyAxios.post(`${config.urlUserService}/user/follow/shop/${shopId}`)
             
-            await getInfoShop(shopId)
+            // await getInfoShop(shopId)
             
             return response.data
         } catch (error) {
@@ -121,7 +121,7 @@ const ProductContextProvider = ({children}) => {
         try {
             const response = await MyAxios.post(`${config.urlUserService}/user/unfollow/shop/${shopId}`)
             
-                await getInfoShop(shopId)
+                // await getInfoShop(shopId)
             
             return response.data
         } catch (error) {
