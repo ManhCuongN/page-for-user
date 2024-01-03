@@ -79,11 +79,11 @@ const Signup = () => {
                  placeholder="Email" />
                 <div>
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button className="button border-0" style={{backgroundColor: '#2ECC71'}}>Đăng Kí</button> 
+                    <button className="button border-0" style={{backgroundColor: '#0D2D53'}}>Đăng Kí</button> 
                     
 
                   </div>
-                  <Button type="success" shape="round"  size='large' style={{backgroundColor: 'rgb(155, 89, 182)', marginLeft: "120px", marginTop: "20px"}}>
+                  <Button type="success" shape="round"  size='large' style={{ marginLeft: "120px", marginTop: "20px"}} className="buttonn-lo">
                     <Link to="/sign-up-shop"  className="loginButton google" style={{color: '#fff'}}>
                       Đăng Kí Với Tư Cách Shop
                     </Link>

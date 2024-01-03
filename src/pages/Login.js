@@ -17,7 +17,7 @@ const Login = () => {
   const { loginUser, loadUser } = useContext(AuthContext);
   const google = () => {
     window.open(
-      `https://api-gateway-production-187c.up.railway.app/api/v1/auth/user/google`,
+      `${process.env.REACT_APP_API_ENDPOINT_SERVER}/auth/user/google`,
       "_self"
     );
   };
@@ -128,12 +128,12 @@ const Login = () => {
                   
                   
                 </div>
-                <Button type="success" shape="round"  size='large' style={{backgroundColor: 'rgb(155, 89, 182)'}}>
+                <Button type="success" shape="round"  size='large' className="buttonn-lo">
                     <Link to="" onClick={google} className="loginButton google" style={{color: '#fff'}}>
                       Đăng Nhập với Google
                     </Link>
                 </Button>
-                <Button type="success" shape="round"  size='large' style={{backgroundColor: 'rgb(155, 89, 182)'}}>
+                <Button type="success" shape="round"  size='large' className="buttonn-lo">
                     <Link to="/sign-up-shop"  className="loginButton google" style={{color: '#fff'}}>
                       Đăng Nhập Với Tư Cách Shop
                     </Link>

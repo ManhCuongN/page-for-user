@@ -29,7 +29,7 @@ function FaceIO() {
 
   const faceIoScriptLoaded = () => {
     if (faceIO && !faceioInstance) {
-      faceioInstance = new faceIO("fioadc5c");
+      faceioInstance = new faceIO("fioa115d");
     }
   };
   // Đăng ký khuôn mặt mới vào hệ thống

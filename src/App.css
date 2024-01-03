@@ -781,3 +781,10 @@ footer .input-group-text {
   color: var(--color-777777);
 }
 /* Shipping page ends here */
+.buttonn-lo {
+  background: linear-gradient(to right, rgb(134,239,172), rgb(59,130,246), rgb(147,51,234));
+}
+
+.buttonn-lo:hover {
+  background: linear-gradient(to right, rgb(236,72,153), rgb(239,68,68), rgb(234,179,8));
+}
