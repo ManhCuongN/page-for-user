@@ -276,9 +276,7 @@ const Home = () => {
         <div className="row">
           {listProductSpecial.map((special) => (
             <SpecialProduct data={special}/>
-          ))}
-          
-         
+          ))}       
         </div>
       </Container>
       <Container class1="popular-wrapper py-5 home-wrapper-2">
