@@ -68,7 +68,7 @@ const ChatBoxAI = () => {
               <p className={`${styles.chatbox_description_header}`}>Xin chào. AI sẽ giúp bạn</p>
             </div>
           </div>
-          <div className={`${styles.chatbox_messages}`}>
+          <div className={`${styles.chatbox_messages}`} style={{height: '250px'}}> 
             {updateChatText()}
             {isWaiting && <div className={styles.loading_indicator}>⏳</div>}
           </div>
