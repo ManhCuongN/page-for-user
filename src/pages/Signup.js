@@ -72,14 +72,10 @@ const Signup = () => {
                     onChange={onChangeRegisterForm}
                   placeholder="Mật Khẩu"
                 />
-                <CustomInput type="text" 
-                name="email"
-                value={email}  
-                onChange={onChangeRegisterForm}
-                 placeholder="Email" />
+              
                 <div>
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button className="button border-0" style={{backgroundColor: '#0D2D53'}}>Đăng Kí</button> 
+                    <button className="button border-0 buttonn-lo">Đăng Kí</button> 
                     
 
                   </div>
