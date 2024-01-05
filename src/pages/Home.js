@@ -355,13 +355,9 @@ const Home = () => {
           
         </div> */}
       </Container>
-      <Space>.
+      <Space>
     <ChatBoxAI  />
 
-    <Space.Compact direction="vertical">
-     <ChatBot />
-     
-    </Space.Compact>
     </Space>
     </>
   );
