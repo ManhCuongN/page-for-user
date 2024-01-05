@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../contexts/AuthContext";
 import FaceIO from "./FaceIO";
+import config from '../config/index.js'
+
 import { Button, Divider, Flex, Radio } from 'antd';
 const Login = () => {
   const location = useLocation();
@@ -17,7 +19,7 @@ const Login = () => {
   const { loginUser, loadUser } = useContext(AuthContext);
   const google = () => {
     window.open(
-      `${process.env.REACT_APP_API_ENDPOINT_SERVER}/auth/user/google`,
+      `${config.urlUserService}/auth/user/google`,
       "_self"
     );
   };
