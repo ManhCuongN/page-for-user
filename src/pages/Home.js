@@ -37,7 +37,6 @@ const Home = () => {
     }
     fetchData();
   },[])
-  
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
