@@ -14,6 +14,8 @@ import {  Button, Space, Carousel} from 'antd'
 import SimpleForm from "../components/ChatCustom";
 const Home = () => {
   const [listProduct,setListProduct] = useState([])
+  const [suggestProductV2,setSuggestProductV2] = useState([])
+
   const [listProductSpecial,setListProductSpecial] = useState([])
 
   const [chatBotAI, setChatBotAI] = useState(false)
@@ -27,13 +29,15 @@ const Home = () => {
       // You can await here
       const response = await getListProduct();
       const suggest = await suggestProductFunc(payloadSug)
+      console.log("sugg", suggest);
+      setSuggestProductV2(suggest)
       const special = await specialProductFunc()
       setListProductSpecial(special)
       setListProduct(response.data)
     }
     fetchData();
   },[])
-  console.log("sugg", listProductSpecial);
+  
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -286,7 +290,7 @@ const Home = () => {
           <img src="https://cdn-icons-png.flaticon.com/512/3336/3336097.png" style={{width: '60px', marginTop: '-8px'}}/>
           </span>Đề Xuất Cho Bạn</h3>
             <div className="row">
-          {suggestProduct.map((s) => (
+          {suggestProductV2?.map((s) => (
             <div className="col-3">
             <BlogCard data={s}/>
           </div>

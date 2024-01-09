@@ -57,6 +57,7 @@ const SingleProduct = () => {
 
 
   const handleValueClick = (key, value) => {
+    
     const updatedSelectedPairs = selectedPairs.filter(pair => pair.key !== key);
     updatedSelectedPairs.push({ key, value });
     setSelectedPairs(updatedSelectedPairs);
@@ -88,6 +89,10 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = async (e) => {
+    if (selectedPairs.length === 0) {
+      toast.error("Vui lòng chọn ít nhất một thuộc tính.");
+      return; // Không thực hiện hành động thêm vào giỏ hàng nếu chưa chọn thuộc tính
+    }
     const transformedObject = selectedPairs.reduce((result, item) => {
       result[item.key] = item.value;
       return result;
@@ -143,7 +148,7 @@ const SingleProduct = () => {
 
   const translateKey = (key) => {
     const translations = {
-      style: "Phong Cách",
+      style: "Nguồn Gốc",
       material: "Chất Liệu",
       brand: "Thương Hiệu",
       color: "Màu Sắc",
