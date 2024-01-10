@@ -30,6 +30,21 @@ const CartContextProvider = ({ children }) => {
         }
     }
 
+     //add to cart
+     const deleteOrder = async (orderId) => {
+        const body = {
+            orderId
+        }
+        console.log(body);
+        try {
+            const add = await axios.delete(`${config.urlSysService}/delete-order`, {data:body})
+            return add.data
+
+        } catch (error) {
+            console.log("Error cart", error.response.data.message);
+        }
+    }
+
    const  updateDiscountv2 = async(data) => {
     console.log("đấtí c",data);
     try {
@@ -165,7 +180,7 @@ const CartContextProvider = ({ children }) => {
     //context data
     const cartContextData = {
         cartState, getCartOfUser, createShoppingSession, addToCart, updateCart, deleteProductCart, checkOutReview,getAllDiscountOfProduct, paymentVNPAY,
-        showModalOrder,updateDiscountv2, setShowModalOrder,hanldeOrderNormal, getListOrderByUser, updateOrderToFillByUser
+        showModalOrder,deleteOrder,updateDiscountv2, setShowModalOrder,hanldeOrderNormal, getListOrderByUser, updateOrderToFillByUser
 
     }
 

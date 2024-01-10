@@ -6,7 +6,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { List, Avatar, Space, Button } from 'antd';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 const ListOrdered = () => {
-    const { getListOrderByUser, updateOrderToFillByUser, cartState: { listOrderedByUser } } = useContext(CartContext)
+    const { getListOrderByUser, updateOrderToFillByUser,deleteOrder, cartState: { listOrderedByUser } } = useContext(CartContext)
     const { authState: { user } } = useContext(AuthContext)
     const [statusOrder, setStatusOrder] = useState(0)
     const { TabPane } = Tabs;
@@ -34,13 +34,21 @@ const ListOrdered = () => {
          await getListOrderByUser(data)
     
     }
+    const handleCancelOrder = async(orderId) => {
+      await deleteOrder(orderId)
+      const data = {
+        order_userId: user.idUser,
+        order_status: statusOrder
+      }
+         await getListOrderByUser(data)
+    }
   
  
   
     const renderOrderList = (orders) => {
       return (
         <List
-         style={{backgroundColor: "#BFDBFD", borderRadius: "15px"}}
+          style={{backgroundColor: "#BFDBFD", borderRadius: "15px"}}
           itemLayout="vertical"
           size="large"
           pagination={{
@@ -54,12 +62,20 @@ const ListOrdered = () => {
             <List.Item
               key={order._id}
               actions={[
+                <>
                 <Space key="actions">
                   {order.order_status == 1 && (
-                  <Button type="primary" style={{marginL: "20px"}} onClick={() => handleToFill(order._id)}>Đã Nhận Được Hàng</Button>
+                  <Button type="primary" style={{marginL: "20px", color:'#fff'}} onClick={() => handleToFill(order._id)}>Đã Nhận Được Hàng</Button>
 
                   )}
-                </Space>,
+                </Space>
+                <Space key="actions">
+                {order.order_status == 1 && (
+                <Button type="primary" style={{marginLeft: "20px", color:'#fff', backgroundColor: '#F6A400'}} onClick={() => handleCancelOrder(order._id)}>Hủy Đơn</Button>
+
+                )}
+              </Space>
+              </>
               ]}
               extra={
                 <div style={{width: '300px'}}>
