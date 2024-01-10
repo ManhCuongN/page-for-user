@@ -11,7 +11,7 @@ import ActionButtons from "../components/address/ActionButton";
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Mentions } from 'antd';
 import { CartContext } from "../contexts/CartContext";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { Badge, Modal, Card, Input, Radio, Space,Button } from 'antd'
 import ModalDiscount from "../components/ModalDiscount";
 import { methodPayment, generateRandomCodeWithHash } from '../constants/index'
@@ -47,6 +47,8 @@ const Checkout = ({socketClient}) => {
   const [orderCheckout, setOrderCheckout] = useState({})
 
   const [totalInit, setTotalInit] = useState(0)
+  const [chooseAddress, setChooseAddress] = useState(false)
+
   const [updatedDataCheckout, setDataCheckout] = useState(null)
   const dataCheckout = []
   const { checkOutReview, getAllDiscountOfProduct, paymentVNPAY, showModalOrder, setShowModalOrder  } = useContext(CartContext)
@@ -62,7 +64,7 @@ const Checkout = ({socketClient}) => {
           Wishlist: item.productId,
           Interests: item.type,
           ShopID_Purchase: item.shopId,
-          brand: item.brand,
+          brand: item.brand || item.origin,
           name_product: item.name
         };
       });
@@ -221,6 +223,7 @@ const Checkout = ({socketClient}) => {
   }
 
   const handleChooseAddress = async (id) => {
+    setChooseAddress(true)
     await findAddress(id)
   }
 
@@ -229,7 +232,11 @@ const Checkout = ({socketClient}) => {
   }
 
   const handleOrder = async () => {
-  
+    console.log("cho",chooseAddress);
+     if(!chooseAddress) {
+      toast.error("Vui lòng chọn địa chỉ giao hàng")
+      return
+     }
     setShowModalOrder(true)
     const { totalPrice, ...newResult } = checkoutOrder;
     

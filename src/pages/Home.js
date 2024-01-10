@@ -29,7 +29,7 @@ const Home = () => {
       // You can await here
       const response = await getListProduct();
       const suggest = await suggestProductFunc(payloadSug)
-      console.log("sugg", suggest);
+     
       setSuggestProductV2(suggest)
       const special = await specialProductFunc()
       setListProductSpecial(special)
@@ -37,6 +37,16 @@ const Home = () => {
     }
     fetchData();
   },[])
+  useEffect(() => {
+    async function fetchDatav2() {
+     const payloadSug = {
+       _id: user.idUser
+     } 
+   const suggest = await suggestProductFunc(payloadSug)
+   setSuggestProductV2(suggest)
+ }
+ fetchDatav2();
+},[])
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
