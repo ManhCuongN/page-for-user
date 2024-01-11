@@ -31,9 +31,10 @@ const CartContextProvider = ({ children }) => {
     }
 
      //add to cart
-     const deleteOrder = async (orderId) => {
+     const deleteOrder = async (orderId, falatArr) => {
         const body = {
-            orderId
+            orderId,
+            falatArr
         }
         console.log(body);
         try {
@@ -44,6 +45,18 @@ const CartContextProvider = ({ children }) => {
             console.log("Error cart", error.response.data.message);
         }
     }
+
+    const getOrderById = async (orderId) => {
+       
+        try {
+            const add = await axios.get(`${config.urlSysService}/get-order-byId/${orderId}`)
+            return add.data
+
+        } catch (error) {
+            console.log("Error cart", error.response.data.message);
+        }
+    }
+
 
    const  updateDiscountv2 = async(data) => {
     console.log("đấtí c",data);
@@ -180,7 +193,7 @@ const CartContextProvider = ({ children }) => {
     //context data
     const cartContextData = {
         cartState, getCartOfUser, createShoppingSession, addToCart, updateCart, deleteProductCart, checkOutReview,getAllDiscountOfProduct, paymentVNPAY,
-        showModalOrder,deleteOrder,updateDiscountv2, setShowModalOrder,hanldeOrderNormal, getListOrderByUser, updateOrderToFillByUser
+        showModalOrder,getOrderById,deleteOrder,updateDiscountv2, setShowModalOrder,hanldeOrderNormal, getListOrderByUser, updateOrderToFillByUser
 
     }
 

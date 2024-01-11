@@ -6,7 +6,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { List, Avatar, Space, Button } from 'antd';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 const ListOrdered = () => {
-    const { getListOrderByUser, updateOrderToFillByUser,deleteOrder, cartState: { listOrderedByUser } } = useContext(CartContext)
+    const { getListOrderByUser, getOrderById,updateOrderToFillByUser,deleteOrder, cartState: { listOrderedByUser } } = useContext(CartContext)
     const { authState: { user } } = useContext(AuthContext)
     const [statusOrder, setStatusOrder] = useState(0)
     const { TabPane } = Tabs;
@@ -35,7 +35,17 @@ const ListOrdered = () => {
     
     }
     const handleCancelOrder = async(orderId) => {
-      await deleteOrder(orderId)
+      const getOrder = await getOrderById(orderId)
+      const quanAndId = getOrder.order_products.map((item) => {
+        return item.item_products.map((productItem) => ({
+            productId: productItem.productId,
+            quantity: productItem.quantity
+        }));
+    });
+    const flattenedArray = quanAndId.flat();
+    console.log(flattenedArray);
+    
+      await deleteOrder(orderId, flattenedArray)
       const data = {
         order_userId: user.idUser,
         order_status: statusOrder
