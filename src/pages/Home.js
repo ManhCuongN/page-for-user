@@ -46,7 +46,7 @@ const Home = () => {
    setSuggestProductV2(suggest)
  }
  fetchDatav2();
-},[])
+},[user.idUser, suggestProductFunc])
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
